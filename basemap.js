@@ -10,8 +10,8 @@ osm: L.tileLayer (
 ),
 geolandbasemap: L.tileLayer (
     "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
-    subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"], 
-    attribution : "Datenquelle: <a href= 'https://www.basemap.at'> basemap.at"
+    subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"], // http://leafletjs.com/reference-1.3.0.html#tilelayer-subdomains
+    attribution : "Datenquelle: <a href= 'https://www.basemap.at'> basemap.at" // http://leafletjs.com/reference-1.3.0.html#layer-attribution
     }
 ), 
 bmapoverlay: L.tileLayer (
@@ -47,9 +47,8 @@ basemapneu : L.tileLayer(
 };
 
 
-
-myMap.addLayer(myLayers.osm);
-let myMapControl = L.control.layers({
+myMap.addLayer(myLayers.osm); // http://leafletjs.com/reference-1.3.0.html#map-addlayer
+let myMapControl = L.control.layers({ // http://leafletjs.com/reference-1.3.0.html#control-layers
 "Openstreetmap": myLayers.osm,
 "geolandbasemap": myLayers.geolandbasemap,
 "bmapgrau": myLayers.bmapgrau,
@@ -72,5 +71,6 @@ L.control.scale({
 // http://leafletjs.com/reference-1.3.0.html#control-scale
 // http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
 // http://leafletjs.com/reference-1.3.0.html#control-scale
-myMap.setView([47.267,11.383], 11);
+
+myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview
 
