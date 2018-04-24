@@ -59,6 +59,18 @@ let myMapControl = L.control.layers({
 },{
 "basemap.at Overlay" : myLayers.bmapoverlay,
 });
+myMap.addControl(myMapControl); 
+// http://leafletjs.com/reference-1.3.0.html#map-addcontrol
 
+L.control.scale({ 
+    position: 'bottomleft', 
+    metric: true,
+    imperial: false, 
+    maxWidth: 200,    
+}).addTo(myMap);
+
+// http://leafletjs.com/reference-1.3.0.html#control-scale
+// http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
+// http://leafletjs.com/reference-1.3.0.html#control-scale
 myMap.setView([47.267,11.383], 11);
 
