@@ -5,7 +5,7 @@ let myLayers ={
 osm: L.tileLayer (
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         subdomains: ["a", "b", "c"], // subdomains https://asmaloney.com/2014/01/code/creating-an-interactive-map-with-leaflet-and-openstreetmap/
-        attribution : "Datenquelle: <a href= 'https://www.basemap.at'> basemap.at"
+        attribution : "Datenquelle: <a href= 'https://www.basemap.at'> openstreetmap.org"
         }
 ),
 geolandbasemap: L.tileLayer (
