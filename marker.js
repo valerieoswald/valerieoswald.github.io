@@ -1,6 +1,6 @@
 
 let myMap = L.map("mapdiv");
-
+let markerGroup = L.featureGroup();
 let myLayers ={
 osm: L.tileLayer (
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -48,6 +48,7 @@ basemapneu : L.tileLayer(
 
 
 myMap.addLayer(myLayers.osm); // http://leafletjs.com/reference-1.3.0.html#map-addlayer
+
 let myMapControl = L.control.layers({ // http://leafletjs.com/reference-1.3.0.html#control-layers
 "Openstreetmap": myLayers.osm,
 "geolandbasemap": myLayers.geolandbasemap,
@@ -57,6 +58,7 @@ let myMapControl = L.control.layers({ // http://leafletjs.com/reference-1.3.0.ht
 "bmaporthofoto30cm": myLayers.bmaporthofoto30cm,
 },{
 "basemap.at Overlay" : myLayers.bmapoverlay,
+"Marker": markerGroup,
 }, {
     collapsed : false
 });
@@ -76,18 +78,26 @@ L.control.scale({
 // http://leafletjs.com/reference-1.3.0.html#control-scale
 
 
-
 myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview
 
 const uni = [47.264, 11.385];
 const usi = [47.257, 11.356];
 const technik =[47.263, 11.343];
+const patscherkofl = [47.220023, 11.466054];
+const igls = [47.232433, 11.408626];
+
+myMap.addLayer(markerGroup);
 const markerOptions =  {title: "Universität Innsbruck",
 draggable: false,
 riseOnHover: true,
 opacity: 0.7,
 };
-L.marker(uni,markerOptions) .addTo(myMap);
-L.marker (usi, markerOptions).addTo(myMap);
-L.marker (technik, markerOptions).addTo(myMap)
-myMap.setView(uni, 13);
+L.marker(uni,markerOptions).addTo(markerGroup);
+L.marker (usi, markerOptions).addTo(markerGroup);
+L.marker (technik, markerOptions).addTo(markerGroup);
+let patscherkoflMarker = L.marker (patscherkofl, {title: "Patscherkofl"}).addTo(markerGroup);
+L.marker (igls, {title: "Igls"}).addTo(markerGroup);
+
+patscherkoflMarker.bindPopup ("<p>Patscherkofl</p><img style='width:200px' src='js/leaflet/images/patscherkofl.jpg' alt='Patscherkofl'/>");
+
+myMap.fitBounds(markerGroup.getBounds());
