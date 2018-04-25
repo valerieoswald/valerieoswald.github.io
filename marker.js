@@ -100,4 +100,13 @@ L.marker (igls, {title: "Igls"}).addTo(markerGroup);
 
 patscherkoflMarker.bindPopup ("<p>Patscherkofl</p><img style='width:200px' src='js/leaflet/images/patscherkofl.jpg' alt='Patscherkofl'/>");
 
+let lift = L.polyline([patscherkofl, igls], {
+    color: "red",
+});
+myMap.addLayer(lift);
+
+let uniPolygon = L.polygon([uni, usi, technik]);
+myMap.addLayer(uniPolygon);
+uniPolygon.bindPopup("Ende!")
+
 myMap.fitBounds(markerGroup.getBounds());
