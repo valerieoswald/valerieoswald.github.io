@@ -84,3 +84,4 @@ markerGroup.addTo(myMap);
 myMap.fitBounds(markerGroup.getBounds());
 
 // zusammen mit Michaela Seewald gemacht
+// haben vergessen nach jeder Änderung zu comitten, daher nur einmal ;)
