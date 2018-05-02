@@ -1,5 +1,6 @@
 
 let myMap = L.map("mapdiv");
+const awsGroup = L.featureGroup ();
 
 let myLayers ={
 osm: L.tileLayer (
@@ -57,6 +58,7 @@ let myMapControl = L.control.layers({ // http://leafletjs.com/reference-1.3.0.ht
 "bmaporthofoto30cm": myLayers.bmaporthofoto30cm,
 },{
 "basemap.at Overlay" : myLayers.bmapoverlay,
+"Wetterstationen" : awsGroup,
 }, {
     collapsed : false
 });
@@ -77,5 +79,16 @@ L.control.scale({
 
 
 
-myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview
+myMap.setView([47.267,11.383], 8); // http://leafletjs.com/reference-1.3.0.html#map-setview
 
+console.log("Stationen: ", stationen);
+let geojson= L.geoJSON(stationen).addTo(awsGroup);
+geojson.bindPopup(function(layer){
+    const props = layer.feature.properties;
+    const popupText= `<h1>${props.name}</h1>
+    <p>Temperatur: ${props.LT} °C </p>`;
+    return popupText; 
+    // console.log("Layer for popup:", layer);
+});
+
+myMap.fitBounds(awsGroup.getBounds());
