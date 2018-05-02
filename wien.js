@@ -78,17 +78,47 @@ L.control.scale({
 // http://leafletjs.com/reference-1.3.0.html#control-scale
 
 
-
 myMap.setView([47.267,11.383], 8); // http://leafletjs.com/reference-1.3.0.html#map-setview
 
-console.log("Spaziergang: ", Spaziergang);
-let geojson= L.geoJSON(Spaziergang).addTo(wienGroup);
-geojson.bindPopup(function(layer){
-    const props = layer.feature.properties;
-    const popupText= `<h1>${props.NAME}</h1>
-    <p> ${props.BEMERKUNG} °C </p>`;
-    return popupText; 
-    // console.log("Layer for popup:", layer);
-});
+// console.log("Spaziergang: ", Spaziergang);
+// let geojson= L.geoJSON(Spaziergang).addTo(wienGroup);
+// geojson.bindPopup(function(layer){
+//     const props = layer.feature.properties;
+//     const popupText= `<h1>${props.NAME}</h1>
+//     <p> ${props.BEMERKUNG} </p>`;
+//     return popupText; 
+//     // console.log("Layer for popup:", layer);
+// });
 
-myMap.fitBounds(wienGroup.getBounds());
+
+
+async function addGeojson (url) {
+    // console.log("Url wird geladen: ", url);
+    const response = await fetch(url);
+    // console.log("Response: ", response);
+    const wiendata = await response.json ();
+    console.log("GeoJson:", wiendata);
+    const geojson = L.geoJSON (wiendata, {
+        style: function(feature){
+            return {color: "#ff0000"};
+        }, 
+        pointToLayer: function(geoJsonPoint, latlng) {
+            return L.marker(latlng, {
+                 icon: L.icon ({
+                    iconUrl: 'sight-2.png'
+                })
+            });
+        }
+        
+    });
+    wienGroup.addLayer(geojson);
+    myMap.fitBounds(wienGroup.getBounds());
+}
+
+
+const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD"
+
+addGeojson(url);
+
+
+myMap.addLayer(wienGroup);
