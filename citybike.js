@@ -58,12 +58,19 @@ async function addGeojson (url) {
         pointToLayer: function(geoJsonPoint, latlng) {
             return L.marker(latlng, {
                  icon: L.icon ({
-                    iconUrl: 'sight-2.png'
+                    iconUrl: 'bicycle_parking.png'
                 })
             });
         }
         
     });
+    geojson.bindPopup(function(layer){
+        const props = layer.feature.properties;
+        const popupText= `<h1>${props.STATION}</h1>`;
+        return popupText; 
+        console.log("Layer for popup:", layer);
+    });
+
     citybikeGroup.addLayer(geojson);
     myMap.fitBounds(citybikeGroup.getBounds());
 }

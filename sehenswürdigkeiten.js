@@ -64,6 +64,13 @@ async function addGeojson (url) {
         }
         
     });
+    geojson.bindPopup(function(layer){
+        const props = layer.feature.properties;
+        const popupText= `<h1>${props.NAME}</h1>
+        <p> ${props.ADRESSE} </p>`;
+        return popupText; 
+        console.log("Layer for popup:", layer);
+    });
     sehenswürdigkeitenGroup.addLayer(geojson);
     myMap.fitBounds(sehenswürdigkeitenGroup.getBounds());
 }
