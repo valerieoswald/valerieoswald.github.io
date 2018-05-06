@@ -16,7 +16,7 @@ myMap.addLayer(myLayers.geolandbasemap);
 let myMapControl = L.control.layers({
 "geolandbasemap": myLayers.geolandbasemap,
 },{
-"Stadtspaziergang" : citybikeGroup,
+"Citybike Standorte" : citybikeGroup,
 }, {
     collapsed : false
 });
