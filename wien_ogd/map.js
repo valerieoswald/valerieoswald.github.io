@@ -74,6 +74,29 @@ async function ladeGeojsonLayer(url) {
     geojsonGruppe.addLayer(geojsonObjekt);
     karte.fitBounds(geojsonGruppe.getBounds());
 }
-
+// einträge im pull down menü werden alphabetisch geordnet!
+wienDatensaetze.sort(function(a,b){
+    if (a.titel < b.titel){
+        return -1;
+    } else if (a.titel > b.titel){
+        return 1;
+    } else {
+        return 0;
+    }
+})
 // den GeoJSON Layer für Grillplätze laden
-ladeGeojsonLayer("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:GRILLPLATZOGD&srsName=EPSG:4326&outputFormat=json");
+ladeGeojsonLayer(wienDatensaetze [5].json);
+
+let layerAuswahl = document.getElementById("layerAuswahl")
+for (datensatz of wienDatensaetze) {
+    layerAuswahl.innerHTML += `<option value="${datensatz.json}">${datensatz.titel}</option>`  
+    // += hängt mir Sepp immer nach dem was in der html datei ist an!
+    console.log(datensatz.titel)
+}
+
+layerAuswahl.onchange = function (evt) {
+    geojsonGruppe.clearLayers(); 
+    // damit die Laer übereinander nicht addiert werden, sondern immer nur einer!
+    ladeGeojsonLayer(evt.target.value);
+}
+// console.log(wienDatensaetze)
