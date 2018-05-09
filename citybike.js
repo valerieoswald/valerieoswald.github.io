@@ -79,10 +79,13 @@ async function addGeojson (url) {
     markers.addLayer(geojson)
     // citybikeGroup.addLayer(geojson);
     // myMap.fitBounds(citybikeGroup.getBounds());
+    myMap.addControl( new L.Control.Search({
+        layer: markers,
+        propertyName: 'STATION'
+}) );
+
     myMap.fitBounds(markerClusterGroup.getBounds());
 }
-
-
 
 
 const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json"
