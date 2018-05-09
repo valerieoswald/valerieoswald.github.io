@@ -2,6 +2,9 @@
 let myMap = L.map("mapdiv");
 const citybikeGroup = L.featureGroup ();
 
+var markers = L.markerClusterGroup();
+myMap.addLayer(markers);
+
 let myLayers ={
 geolandbasemap: L.tileLayer (
     "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
@@ -70,10 +73,16 @@ async function addGeojson (url) {
         return popupText; 
         console.log("Layer for popup:", layer);
     });
+    
 
-    citybikeGroup.addLayer(geojson);
-    myMap.fitBounds(citybikeGroup.getBounds());
+    const hash = new L.hash(myMap);
+    markers.addLayer(geojson)
+    // citybikeGroup.addLayer(geojson);
+    // myMap.fitBounds(citybikeGroup.getBounds());
+    myMap.fitBounds(markerClusterGroup.getBounds());
 }
+
+
 
 
 const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json"
