@@ -87,7 +87,7 @@ myMap.setView([47.267,11.383], 8); // http://leafletjs.com/reference-1.3.0.html#
 //     const popupText= `<h1>${props.NAME}</h1>
 //     <p> ${props.BEMERKUNG} </p>`;
 //     return popupText; 
-//     // console.log("Layer for popup:", layer);
+//     console.log("Layer for popup:", layer);
 // });
 
 
@@ -124,7 +124,8 @@ async function addGeojson (url) {
     myMap.fitBounds(wienGroup.getBounds());
 }
 
-
+// wienGroup.addLayer(geojson);
+// myMap.fitBounds(wienGroup.getBounds());
 const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD"
 
 addGeojson(url);

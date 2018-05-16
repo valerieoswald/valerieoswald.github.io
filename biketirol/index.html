@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bike Trail Tirol - Etappe 22</title><!-- TODO: Etappentitel einfügen -->
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../js/leaflet/leaflet.css" />
+    <script src="../js/leaflet/leaflet.js"></script>
+    <script src= "data/etappe22.geojson.js"></script>
+    
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="biketirol.js"></script>
+
+</head>
+
+<body>
+    <div id="header">
+        <h2 class="white">Bike Trail Tirol</h2>
+        <h3 class="white">Griass enk die Wadeln!</h3>
+    </div>
+
+    <div class="author">
+        <img src="images/user.jpg" alt="Ihr Reiseleiter" /><!-- TODO: anpassen -->
+        <p class="gray">
+            <a href="mailto:valerie.oswald@student.uibk.ac.at">Valerie Oswald</a> -<!-- TODO: anpassen -->
+            <a href="https://valerieoswald.github.io/biketirol/index.html">https://valerieoswald.github.io/biketirol/</a><!-- TODO: anpassen -->
+        </p>
+    </div>
+
+    <hr />
+
+    
+    <div class="article">
+        <h1>Etappe 22 von Matrei nach Mieders</h1><!-- TODO: anpassen -->
+
+        <p>Eine steile Auffahrt, eine einsame Kirche und schließlich eine lange Schotterabfahrt charakterisieren diese malerische Strecke, die Sie mit einer Länge von 13 Kilometern vom Wipptal über das Waldraster Jöchl in das Stubaital bringt. Erstes Etappenziel ist die Kirche Maria Waldrast. Auf 1.640 Metern gelegen zählt es zu den am höchsten gelegenen Klöstern Europas. Das Gasthaus neben der Kirche lädt zu Einkehr. 
+            <!-- https://www.tirol.at/reisefuehrer/sport/radfahren/biketouren?form=biketours&theme[]=1</p> -->
+
+        <!-- TODO: Karte mit Radroute und Marker beim Start- und Endpunkt. Hintergrundkarte OSM, basemap.at und Elektronische Karte Tirol (Sommer, Winter, Orthophoto jeweils mit Beschriftung) - siehe biketirol.js -->
+        <div id="map"></div>
+
+        <h2>Streckenbeschreibung</h2>
+        <p>Die Strecke steigt sofort nach der Abzweigung von der Bundesstraße an (MTB Route 508). In zwei kleinen Serpentinen geht es zunächst vorbei an den letzten Häusern von Matrei/Mühlbachl hinauf zur Mautstation (Mautpflicht nur für PKW). Die nächsten Kilometer verlaufen immer ansteigend mit einigen Kehren durch einen schönen Wald bis zur Wallfahrtskirche von Maria Wadrast (2h 15min ab Matrei). Nach der Einkehr im Gasthaus hat man noch knapp 100 Höhenmeter hinauf zum Waldraster Jöchl zu bewältigen. Auf einer Forststraße (558) geht es auf der anderen Seite hinunter ins Stubai bis nach Mieders (1h ab Maria Waldrast).</p>
+        <!-- <p>TODO: ausführliche Streckenbeschreibung aus Online Beschreibung https://www.tirol.at/reisefuehrer/sport/radfahren/biketouren?form=biketours&theme[]=1</p> -->
+
+        <h3>Links</h3>
+        <ul>
+            <li><a href="https://www.tirol.at/reisefuehrer/sport/radfahren/biketouren/a-bike-trail-tirol-matrei-maria-waldrast-mieders">Etappenbeschreibung</a>
+                <!-- TODO: Link zur Etappenbeschreibung bei Biketrail Tirol</li> -->
+            <li><a href="https://www.tirol.at/orte/a-mieders">Mieders</a>
+            <li><a href="https://www.tirol.at/orte/a-matrei-am-brenner">Matrei am Brenner</a>
+            <li><a href="https://www.tirol.at/reisefuehrer/ausflugstipps/ausflugsziele/a-wallfahrtskloster-maria-waldrast">Wallfahrtskirche von Maria Wadrast</a>    
+                <!-- TODO: mindestens drei weitere Links zur Umgebung ...</li> -->
+        </ul>
+    </div>
+
+    <hr />
+
+    <!-- TODO: Links anpassen zu den benachbarten Etappen - siehe OLAT Tabelle ... -->
+    <div id="footer" class="gray">
+        <a class="back" href="../21/index.html">
+            <i class="fas fa-arrow-alt-circle-left"></i> vorhergehender Stop</a>
+        <a class="next" href="../23/index.html">nächster Stop
+            <i class="fas fa-arrow-alt-circle-right"></i>
+        </a>
+    </div>
+
+</body>
+</html>
