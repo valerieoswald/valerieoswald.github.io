@@ -89,7 +89,7 @@ let myMapControl = L.control.layers({
     "tirol ortho": tirolortho,}
 , {
     // "tirol Beschriftung" : myLayers.tirolschrift,
-    "Etappe 22" : etappe22Group,
+    "Etappe 22" : etappe22Group, 
     "Start und Ziel" : markerGroup,
     }, {
         collapsed : false
