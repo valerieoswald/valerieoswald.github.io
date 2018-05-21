@@ -27,7 +27,9 @@
 
 // -Overlay controls zum unabhängigem Ein-/Ausschalten der Route und Marker hinzufügen
 
-let myMap = L.map("map");
+let myMap = L.map("map", {
+    fullscreenControl: true
+});
 const etappe22Group = L.featureGroup ();
 let markerGroup = L.featureGroup();
 let tirolsommer = L.featureGroup ();
@@ -119,9 +121,28 @@ let zielMarker = L.marker (ziel,{icon: L.icon ({iconUrl: 'images/ziel.png',iconS
 startMarker.bindPopup ("<h1>Start</h1><a href='https://de.wikipedia.org/wiki/Matrei_am_Brenner'>Matrei");  
 zielMarker.bindPopup ("<h1>Ziel</h1><a href=' https://de.wikipedia.org/wiki/Mieders'>Mieders");
 
-console.log("etappe22: ", etappe22);
-let geojson= L.geoJSON(etappe22).addTo(etappe22Group);
+// console.log("etappe22: ", etappe22);
+// let geojson= L.geoJSON(etappe22).addTo(etappe22Group);
 
-etappe22Group.addLayer(geojson);
-myMap.fitBounds(etappe22Group.getBounds());
-myMap.addLayer(etappe22Group);
+// etappe22Group.addLayer(geojson);
+
+
+let gpxTrack = new L.GPX ("data/etappe22.gpx", {
+    async: true, 
+}).addTo(etappe22Group);
+gpxTrack.on("loaded", function(evt) {
+    console.log("get_distance", evt.target.get_distance().toFixed(0))
+    console.log("get_elevation_min", evt.target.get_elevation_min().toFixed(0))
+    console.log("get_elevation_max",evt.target.get_elevation_max().toFixed(0))
+    console.log("get_elevation_gain",evt.target.get_elevation_gain().toFixed(0))
+    console.log("get_elevation_loss",evt.target.get_elevation_loss().toFixed(0))
+    let laenge = evt.target.get_distance().toFixed(0);
+    document.getElementById("laenge").innerHTML = laenge;
+
+    myMap.fitBounds(evt.target.getBounds());
+});
+
+
+
+// myMap.fitBounds(etappe22Group.getBounds());
+// myMap.addLayer(etappe22Group);

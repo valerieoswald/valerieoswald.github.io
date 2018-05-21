@@ -65,15 +65,53 @@ L.control.scale({
 }).addTo(karte);
 
 // asynchrone Funktion zum Laden eines GeoJSON Layers
-async function ladeGeojsonLayer(url) {
-    const response = await fetch(url);
+async function ladeGeojsonLayer(datenAttribute) {
+    const response = await fetch(datenAttribute.json);
+    console.log(datenAttribute);
     const response_json = await response.json();
 
+    if(datenAttribute.icon) {
+        console.log("Pause")
+    }
+
     // GeoJSON Geometrien hinzufügen und auf Ausschnitt zoomen
-    const geojsonObjekt = L.geoJSON(response_json);
+    const geojsonObjekt = L.geoJSON(response_json, {
+        onEachFeature : function(feature,layer) {
+        // console.log(feature.properties);
+       let popup ="<h3>Attribute</h3>";
+        for (attribut in feature.properties){
+            let wert = feature.properties[attribut]; 
+            if (wert && wert.toString().startsWith("http:")){
+                popup += `${attribut}:<a href = "${wert}">Weblink</a><br/>`;  
+            } else {
+                popup += `${attribut}: ${wert}<br/>`;
+
+            }
+        // console.log(attribut, feature.properties[attribut])
+        // popup += `${attribut}: ${feature.properties[attribut]}<br/>`;
+        }
+        // console.log(popup)
+        layer.bindPopup(popup, {
+            maxWidth : 600, 
+        });
+     },
+     pointToLayer : function(geoJsonPoint, latlng) {
+        if (datenAttribute.icon) {
+            return L.marker(latlng, {
+              icon : L.icon ({
+                  iconUrl : datenAttribute.icon,
+                  iconAnchor : [16, 32],
+                  popupAnchor : [0, -32],
+              })  
+            })
+        } else {
+            return L.marker(latlng);
+        }
+    }
+    });
     geojsonGruppe.addLayer(geojsonObjekt);
     karte.fitBounds(geojsonGruppe.getBounds());
-}
+};
 // einträge im pull down menü werden alphabetisch geordnet!
 wienDatensaetze.sort(function(a,b){
     if (a.titel < b.titel){
@@ -85,18 +123,20 @@ wienDatensaetze.sort(function(a,b){
     }
 })
 // den GeoJSON Layer für Grillplätze laden
-ladeGeojsonLayer(wienDatensaetze [5].json);
+ladeGeojsonLayer(wienDatensaetze [3]);
 
 let layerAuswahl = document.getElementById("layerAuswahl")
-for (datensatz of wienDatensaetze) {
-    layerAuswahl.innerHTML += `<option value="${datensatz.json}">${datensatz.titel}</option>`  
+for (let i=0; i<wienDatensaetze.length; i++) {
+    layerAuswahl.innerHTML += `<option value="${i}">${wienDatensaetze[i].titel}</option>`  
     // += hängt mir Sepp immer nach dem was in der html datei ist an!
-    console.log(datensatz.titel)
+    console.log(i, wienDatensaetze[i].titel)
 }
 
 layerAuswahl.onchange = function (evt) {
-    geojsonGruppe.clearLayers(); 
-    // damit die Laer übereinander nicht addiert werden, sondern immer nur einer!
-    ladeGeojsonLayer(evt.target.value);
+    geojsonGruppe.clearLayers();
+    let i = evt.target.value;
+    console.log(i, wienDatensaetze[i])
+    // damit die Layer übereinander nicht addiert werden, sondern immer nur einer!
+    ladeGeojsonLayer(wienDatensaetze[i]);
 }
 // console.log(wienDatensaetze)

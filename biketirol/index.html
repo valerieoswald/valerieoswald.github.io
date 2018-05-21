@@ -10,8 +10,14 @@
     
     <link rel="stylesheet" href="../js/leaflet/leaflet.css" />
     <script src="../js/leaflet/leaflet.js"></script>
-    <script src= "data/etappe22.geojson.js"></script>
-    
+    <!-- <script src= "data/etappe22.geojson.js"></script> -->
+
+    <link rel="stylesheet" href="../js/leaflet.fullscreen/Leaflet.fullscreen.css" />
+    <script src="../js/leaflet.fullscreen/Leaflet.fullscreen.js"></script>
+
+    <script src="../js/leaflet.gpx/gpx.js"></script>
+
+
     <link rel="stylesheet" href="styles.css" />
     <script defer src="biketirol.js"></script>
 
@@ -40,8 +46,10 @@
         <p>Eine steile Auffahrt, eine einsame Kirche und schließlich eine lange Schotterabfahrt charakterisieren diese malerische Strecke, die Sie mit einer Länge von 13 Kilometern vom Wipptal über das Waldraster Jöchl in das Stubaital bringt. Erstes Etappenziel ist die Kirche Maria Waldrast. Auf 1.640 Metern gelegen zählt es zu den am höchsten gelegenen Klöstern Europas. Das Gasthaus neben der Kirche lädt zu Einkehr. 
             <!-- https://www.tirol.at/reisefuehrer/sport/radfahren/biketouren?form=biketours&theme[]=1</p> -->
 
-        <!-- TODO: Karte mit Radroute und Marker beim Start- und Endpunkt. Hintergrundkarte OSM, basemap.at und Elektronische Karte Tirol (Sommer, Winter, Orthophoto jeweils mit Beschriftung) - siehe biketirol.js -->
-        <div id="map"></div>
+        
+            <!-- TODO: Karte mit Radroute und Marker beim Start- und Endpunkt. Hintergrundkarte OSM, basemap.at und Elektronische Karte Tirol (Sommer, Winter, Orthophoto jeweils mit Beschriftung) - siehe biketirol.js -->
+            <p>Tourdaten: Gesamtlänge <span id="laenge"></span> m</p>
+            <div id="map"></div>
 
         <h2>Streckenbeschreibung</h2>
         <p>Die Strecke steigt sofort nach der Abzweigung von der Bundesstraße an (MTB Route 508). In zwei kleinen Serpentinen geht es zunächst vorbei an den letzten Häusern von Matrei/Mühlbachl hinauf zur Mautstation (Mautpflicht nur für PKW). Die nächsten Kilometer verlaufen immer ansteigend mit einigen Kehren durch einen schönen Wald bis zur Wallfahrtskirche von Maria Wadrast (2h 15min ab Matrei). Nach der Einkehr im Gasthaus hat man noch knapp 100 Höhenmeter hinauf zum Waldraster Jöchl zu bewältigen. Auf einer Forststraße (558) geht es auf der anderen Seite hinunter ins Stubai bis nach Mieders (1h ab Maria Waldrast).</p>
