@@ -30,11 +30,12 @@
 let myMap = L.map("map", {
     fullscreenControl: true
 });
-const etappe22Group = L.featureGroup ();
+const etappe22Group = L.featureGroup ().addTo(myMap);
 let markerGroup = L.featureGroup();
 let tirolsommer = L.featureGroup ();
 let tirolwinter = L.featureGroup ();
 let tirolortho = L.featureGroup ();
+let overlaySteigung = L.featureGroup().addTo(myMap);
 
 let myLayers ={
     osm: L.tileLayer (
@@ -89,8 +90,9 @@ let myMapControl = L.control.layers({
     "tirol ortho": tirolortho,}
 , {
     // "tirol Beschriftung" : myLayers.tirolschrift,
-    "Etappe 22" : etappe22Group, 
     "Start und Ziel" : markerGroup,
+    "Etappe 22" : etappe22Group,
+    "Steigung" : overlaySteigung,
     }, {
         collapsed : false
     });
@@ -126,6 +128,12 @@ zielMarker.bindPopup ("<h1>Ziel</h1><a href=' https://de.wikipedia.org/wiki/Mied
 
 // etappe22Group.addLayer(geojson);
 
+//höhenprofil dazu
+let hoehenProfil = L.control.elevation({
+    position: "topright",
+    theme: "steelblue-theme",
+    collapsed: true,
+}).addTo(myMap);
 
 let gpxTrack = new L.GPX ("data/etappe22.gpx", {
     async: true, 
@@ -150,6 +158,38 @@ gpxTrack.on("loaded", function(evt) {
     myMap.fitBounds(evt.target.getBounds());
 });
 
+gpxTrack.on("addline", function(evt){
+    hoehenProfil.addData(evt.line);
+    console.log(evt.line);
+    console.log(evt.line.getLatLngs());
+    console.log(evt.line.getLatLngs()[0]);
+    console.log(evt.line.getLatLngs()[0].lat);
+    console.log(evt.line.getLatLngs()[0].lng);
+    console.log(evt.line.getLatLngs()[0].meta);
+    console.log(evt.line.getLatLngs()[0].meta.ele);
+
+    // alle Segmente der Steigunslinie hinzufügen
+    let gpxLinie = evt.line.getLatLngs();
+//    let i=1 weils beim zweiten punkt startet
+    for (let i=1; i < gpxLinie.length; i++) {
+        let p1 = gpxLinie[i-1];
+        let p2 = gpxLinie[i];
+        console.log(p1.lat,p1.lng,p2.lat,p2.lng);
+
+        let segment = L.polyline(
+            [
+                [p1.lat, p1.lng],
+                [p2.lat, p2.lng],
+            ], {
+                color : "red"
+            }
+        ).addTo(overlaySteigung);
+    }
+});
+
+ 
+
+// um die position im Höhenprofil zu bestimmen im leaflet.elevation-0.0.4.min.js und src.js -> L.Browser.touch suchen und mit L.Browser.mobile ersetzen!! 
 
 
 // myMap.fitBounds(etappe22Group.getBounds());
