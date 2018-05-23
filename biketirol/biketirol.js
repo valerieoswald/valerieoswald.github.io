@@ -30,7 +30,7 @@
 let myMap = L.map("map", {
     fullscreenControl: true
 });
-const etappe22Group = L.featureGroup ().addTo(myMap);
+const etappe22Group = L.featureGroup ();
 let markerGroup = L.featureGroup();
 let tirolsommer = L.featureGroup ();
 let tirolwinter = L.featureGroup ();
@@ -91,8 +91,8 @@ let myMapControl = L.control.layers({
 , {
     // "tirol Beschriftung" : myLayers.tirolschrift,
     "Start und Ziel" : markerGroup,
-    "Etappe 22" : etappe22Group,
     "Steigung" : overlaySteigung,
+    "Etappe 22" : etappe22Group,
     }, {
         collapsed : false
     });
@@ -174,14 +174,46 @@ gpxTrack.on("addline", function(evt){
     for (let i=1; i < gpxLinie.length; i++) {
         let p1 = gpxLinie[i-1];
         let p2 = gpxLinie[i];
-        console.log(p1.lat,p1.lng,p2.lat,p2.lng);
+    
+//  Entfernung berechnen
+        let dist = myMap.distance(
+            [p1.lat, p1.lng],
+            [p2.lat, p2.lng]
+        );
+
+        // Höhenunterschied berechnen
+        let delta = p2.meta.ele -p1.meta.ele;
+
+        // Steigung in Prozent berechnen
+        // let proz = 0;
+        // if (dist > 0) {
+        //     proz = (delta / dist * 100.0).toFixed(1);
+        // }
+        let proz = (dist > 0) ? (delta / dist * 100.0).toFixed(1) : 0;
+        // if dist > 0 -> schaut, dass nicht durch 0 divideirt wird (sonst fehler und strecke wird nicht weiterberechnet)
+        // toFixed(1) -> eine Nachkommastelle!
+
+        // Bedingung ? Ausdruck! : Ausdruck2
+
+        console.log(p1.lat,p1.lng,p2.lat,p2.lng, dist, delta, proz);
+        let farbe = 
+            proz >10  ? "#d7301f" : 
+            proz >6   ? "#fc8d59": 
+            proz >2   ? "#fdcc8a" : 
+            proz >0   ? "#fef0d9" : 
+            proz >-2  ? "#edf8fb" : 
+            proz >-6  ? "#b2e2e2" : 
+            proz >-10 ? "#66c2a4" : 
+                        "#238b45";
+// http://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3
 
         let segment = L.polyline(
             [
                 [p1.lat, p1.lng],
                 [p2.lat, p2.lng],
             ], {
-                color : "red"
+                color : farbe,
+                weight : 10,
             }
         ).addTo(overlaySteigung);
     }
@@ -194,3 +226,8 @@ gpxTrack.on("addline", function(evt){
 
 // myMap.fitBounds(etappe22Group.getBounds());
 // myMap.addLayer(etappe22Group);
+
+
+
+
+// http://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3
